@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DbTest.Properties
+namespace MutantCardFinder.Properties
 {
 
 
