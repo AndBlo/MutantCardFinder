@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,6 +94,30 @@ namespace MutantCardFinder
         private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
+
+        }
+
+
+        private void MakeBackupOfDataBase(string mutantDb)
+        {
+            string dbFileName = mutantDb + DateTime.Now.ToString("yyyyMMddHHmmss") + ".db";
+            string newPath = Directory.GetCurrentDirectory() + @"\DB_Backup\";
+            if (!Directory.Exists(newPath))
+            {
+                System.IO.Directory.CreateDirectory(newPath);
+            }
+            var files = Directory.EnumerateFiles(newPath).ToList();
+
+            if (files.Count >= 10)
+            {
+                var oldestFile = files.OrderBy(f => f).Select(f => f).FirstOrDefault();
+                File.Delete(oldestFile);
+            }
+
+            if (File.Exists(mutantDb + ".db"))
+            {
+                File.Copy(mutantDb + ".db", newPath + dbFileName);
+            }
         }
 
         private void ButtonRandomize_OnClick(object sender, RoutedEventArgs e)
@@ -113,6 +138,11 @@ namespace MutantCardFinder
                 AssignModelFields(mutations[rnd.Next(0, mutations.Count)]);
             }
 
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            MakeBackupOfDataBase(@"Mutant");
         }
     }
 }

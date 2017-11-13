@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MutantCardFinder"
         mc:Ignorable="d"
+        Closing="MainWindow_OnClosing"
         Title="Mutant År Noll" Height="521.133" Width="476.2">
     <Grid>
         <Grid.RowDefinitions>
